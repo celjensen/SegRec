@@ -11,6 +11,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* Add these to ensure body doesn't cause issues with fixed elements */
+  margin: 0;
+  padding: 0;
+  width: 100%; /* Ensure body takes full width */
+  min-height: 100vh; /* Ensure body takes full height for positioning */
 }
 
 .container {
@@ -22,17 +27,23 @@ body {
   flex-direction: column;
   justify-content: space-between;
 
-  flex: 1; /* Allow container to grow and take available space */
-  overflow-y: auto; /* THIS IS THE KEY FOR VERTICAL SCROLLING */
-  -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .screen {
   flex: 1;
   display: flex;
   flex-direction: column;
+  /* Add padding to the top of each screen to account for the fixed header */
+  /* This ensures content isn't hidden behind the fixed header */
+  padding-top: 60px; /* Adjust this value. It should be (header height + its top/bottom padding) */
+  padding-bottom: 70px; /* Add padding at the bottom for the fixed nav bar */
 }
 
+/* ------------------------------------------------------------------- */
+/* UPDATED HEADER STYLES: Make it fixed */
 .header {
   background-color: #052c49;
   color: white;
@@ -41,12 +52,28 @@ body {
   font-size: 1.5rem;
   font-weight: 600;
   box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-}
 
-.content {
+  /* Fixed positioning */
+  position: fixed;
+  top: 0;
+
+  /* Centering for fixed elements with max-width */
+  left: 0;       /* Align to left edge */
+  right: 0;      /* Align to right edge */
+  margin: auto;  /* This magical property centers it horizontally */
+
+  width: 100%;     /* Takes full width up to max-width */
+  max-width: 430px; /* Crucial: Matches your .container's max-width */
+  z-index: 1000;
+}
+/* ------------------------------------------------------------------- */
+
+
+.content { /* This is likely for the Record page's content */
   flex: 1;
   padding: 20px;
   text-align: center;
+  /* No specific padding-top needed here if .screen handles it */
 }
 
 .label {
@@ -181,8 +208,8 @@ input:checked + .slider:before {
   bottom: 0;
   left: 0;
   right: 0;
-  max-width: 430px;
-  margin: auto;
+  max-width: 430px; /* Crucial: Match your .container's max-width */
+  margin: auto; /* Centers the fixed nav on larger screens */
   padding-bottom: env(safe-area-inset-bottom);
 
   z-index: 1000; /* Ensure it's above other scrolling content */
@@ -211,6 +238,7 @@ input:checked + .slider:before {
   line-height: 1.6;
   color: #222;
   overflow-y: auto;
+  /* No specific padding-top needed here if .screen handles it */
 }
 
 .help-content strong {
@@ -236,11 +264,12 @@ input:checked + .slider:before {
 
 /* Segment Page */
 .segment-content {
-  margin-top: -20px;
+  margin-top: -20px; /* You had this, will be affected by new padding-top on .screen */
   padding: 10px;
   font-size: 14px;
   color: #222;
   text-align: center;
+  /* No specific padding-top needed here if .screen handles it */
 }
 
 .segment-content input[type="file"] {
@@ -254,7 +283,7 @@ input:checked + .slider:before {
 }
 
 #gpxFilename {
-  margin-top: -8px; /* Adjust this value (e.g., -10px, -20px) to move only the GPX filename higher */
+  margin-top: -8px;
 }
 
 .segment-content .process-button,
@@ -267,18 +296,15 @@ input:checked + .slider:before {
   border-radius: 8px;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   margin: 16px 6px;
-
 }
 
-/* Add this new rule below the existing one */
+/* Process Button specific font size (from previous fix) */
 #processBtn {
-  font-size: 20px; /* Adjust this value to your desired size (e.g., 18px, 22px) */
-  /* You can also adjust padding here if the larger font makes the button look too small */
-  /* padding: 12px 24px; */
+  font-size: 20px;
 }
 
 .segment-content .process-button {
-  margin-top: 30px; /* Adjust this value (e.g., 25px, 35px) to move it down */
+  margin-top: 30px;
 }
 
 .segment-content .upload-txt-button {
