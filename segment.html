@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Segment</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+
+  <script src="leaflet.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="screen">
+      <div class="header">Segment</div>
+
+      <div class="segment-content">
+        <!-- GPX Upload -->
+        <div class="upload-section">
+          <button id="uploadGpxBtn" class="process-button">Upload GPX</button>
+          <input type="file" id="gpxFile" accept=".gpx" style="display: none;">
+          <div id="gpxFilename" class="file-label" style="margin-bottom: 20px;"></div>
+        </div>
+
+        <!-- TXT Selector -->
+        <div id="recordingSection" style="display: none;">
+          <h3>Select saved recording or upload a .txt file</h3>
+          <select id="recordingSelect" size="4"></select>
+          <div id="txtFilename" class="file-label"></div>
+        </div>
+
+        <!-- Upload TXT Button -->
+        <div class="upload-txt-wrapper" style="display: none; margin-top: 10px;">
+          <button id="uploadTxtTest" class="upload-txt-button">
+            Upload .txt
+          </button>
+        </div>
+
+        <!-- Process Button -->
+        <div id="processSection" style="display: none;">
+          <button id="processBtn" class="process-button">Process</button>
+        </div>
+
+        <!-- Map and Downloads -->
+        <div id="resultSection" style="display: none;">
+          <div class="segment-map-preview" id="map-preview" style="border-radius: 12px; margin-top: 20px;"></div>
+          <div class="download-buttons">
+            <!-- CHANGE THESE IDs to match app.js -->
+            <button id="downloadGoodGpxBtn" class="download-button">Download good.gpx</button>
+            <button id="downloadAvoidGpxBtn" class="download-button">Download avoid.gpx</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav bar -->
+  <div class="nav">
+    <a href="index.html" class="nav-item">
+      <img src="icons/home.svg" alt="Home">
+      <span>Home</span>
+    </a>
+    <a href="record.html" class="nav-item">
+      <img src="icons/record.svg" alt="Record">
+      <span>Record</span>
+    </a>
+    <a href="segment.html" class="nav-item">
+      <img src="icons/segment.svg" alt="Segment">
+      <span>Segment</span>
+    </a>
+    <a href="help.html" class="nav-item">
+      <img src="icons/help.svg" alt="Help">
+      <span>Help</span>
+    </a>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
