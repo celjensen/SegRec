@@ -9,15 +9,13 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
 </head>
 <body>
+  <div class="header">Record</div>
+
   <div class="container">
     <div class="screen" id="recordScreen">
-      <div class="header">Record</div>
-
       <div class="content">
-        <!-- Initial state label -->
         <div id="initialState" class="label">Initial State</div>
 
-        <!-- Toggle switch row -->
         <div class="toggle-group" id="toggleRow">
           <span>Good</span>
           <label class="switch">
@@ -27,25 +25,21 @@
           <span>Avoid</span>
         </div>
 
-        <!-- Updated state display -->
         <div id="currentState" class="label" style="display: none;">State: Good since --</div>
       </div>
 
-      <!-- Start button -->
       <div class="button-wrapper">
         <div class="button-container">
           <button id="startBtn">Start</button>
         </div>
       </div>
 
-      <!-- End button -->
       <div class="end-button-wrapper">
         <button id="endBtn" class="invisible">End</button>
       </div>
     </div>
   </div>
 
-  <!-- Bottom nav bar -->
   <div class="nav">
     <a href="index.html" class="nav-item">
       <img src="icons/home.svg" alt="Home">
