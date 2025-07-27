@@ -8,7 +8,7 @@
 html, body {
   height: 100%;
   margin: 0;
-  /* Keep overflow: hidden; for html/body if you absolutely need to prevent full page scroll */
+  overflow: hidden;
 }
 
 body {
