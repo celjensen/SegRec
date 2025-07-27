@@ -8,48 +8,40 @@
 html, body {
   height: 100%;
   margin: 0;
+  /* Keep overflow: hidden; for html/body if you absolutely need to prevent full page scroll */
 }
-
 
 body {
   font-family: 'Inter', sans-serif;
   background-color: #f5f5f5;
   display: flex;
-  justify-content: center; /* Centers the whole app container horizontally */
-  /* align-items: center;  Removed as it vertically centers the app, which can conflict with fixed elements */
+  justify-content: center;
   margin: 0;
   padding: 0;
-  width: 100%; /* Ensure body takes full width */
-  min-height: 100vh; /* Ensure body takes at least full viewport height for positioning */
+  width: 100%;
+  height: 100vh; /* Use height: 100vh to ensure body takes full viewport height */
+  /* Remove min-height: 100vh here as height: 100vh is more definitive for a contained app */
 }
 
 .container {
   width: 100%;
-  height: 100%;
+  height: 100%; /* Make container take 100% height of the body */
   max-width: 430px;
-  /* Removed height: 100vh; to allow flexible height based on content and fixed elements */
-  min-height: 100vh; /* Ensures container is at least full viewport height */
   background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Keeps header/footer pushed to ends if content is short */
-
-  /* flex: 1;  Removed - container is a direct child of body, which is flex, so it will grow */
-  overflow: hidden; /* Prevent container itself from showing scrollbars */
-  /* -webkit-overflow-scrolling: touch; This is now on .screen */
+  justify-content: space-between;
+  overflow: hidden; /* Keep overflow hidden for the container itself */
 }
 
 .screen {
-  flex: 1; /* Makes the screen content area take up all available space between fixed header/nav */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  /* Padding to account for the fixed header and nav bar */
-  /* Header height approx: 1.2rem (top padding) + 1.5rem (font-size) + 1.2rem (bottom padding) = 3.9rem */
-  /* Assuming 1rem = 16px, 3.9rem = 62.4px. Using 60px is a good estimate. */
-  padding-top: 60px; /* Pushes content down from fixed header */
-  padding-bottom: 70px; /* Pushes content up from fixed nav bar */
-  overflow-y: auto; /* THIS IS THE KEY: Makes the content area within the screen scrollable */
-  -webkit-overflow-scrolling: touch; /* Smoother scrolling on iOS */
+  padding-top: 60px;
+  padding-bottom: 70px;
+  overflow-y: auto; /* This remains the primary scroll area */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ------------------------------------------------------------------- */
