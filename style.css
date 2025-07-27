@@ -25,7 +25,7 @@ body {
 
 .container {
   width: 100%;
-  min-height: 100 vh;
+  min-height: 100vh;
   max-width: 430px;
   background-color: white;
   display: flex;
