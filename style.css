@@ -46,7 +46,7 @@ body {
   /* justify-content: space-between; */
 
   /* Use generous padding to push content away from fixed header/nav */
-  padding-top: 85px; /* Increased to give more space for the header */
+  /*padding-top: 85px;  Increased to give more space for the header */
   padding-bottom: 130px; /* Increased to give more space for the nav bar + safe area */
 
   overflow-y: auto; /* This remains the primary scroll area */
@@ -78,6 +78,16 @@ body {
   z-index: 1000;   /* Ensures it's always on top of other content */
 }
 /* ------------------------------------------------------------------- */
+
+.header-spacer {
+  height: 65px; /* Match your .screen padding-top */
+  flex-shrink: 0;
+}
+
+.nav-spacer {
+  height: 130px; /* Equal to or a bit more than your .nav height */
+  flex-shrink: 0;
+}
 
 
 .content { /* This is likely for the Record page's content */
