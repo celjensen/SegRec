@@ -8,10 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // === RECORD PAGE LOGIC ===
   const startBtn = document.getElementById("startBtn");
   const stateToggle = document.getElementById("stateToggle");
-  const currentStateLabel = document.getElementById("currentState");
+  const currentStateLabel = document.getElementById("currentState"); // Still need this to update text
   const endBtn = document.getElementById("endBtn");
-  const initialState = document.getElementById("initialState");
-  const toggleRow = document.getElementById("toggleRow");
+
+  // NEW: References to the containers
+  const initialStateContainer = document.getElementById("initialStateContainer");
+  const recordingStateContainer = document.getElementById("recordingStateContainer");
 
   let recording = false;
   let recordingData = [];
@@ -23,6 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Helper function to format UTC date to local simple time string
   function formatUTCToLocalSimpleTime(utcString) {
     const date = new Date(utcString);
+    // Use options for a more readable time format if needed, e.g., for 12-hour:
+    // return date.toLocaleString(undefined, { hour: 'numeric', minute: '2-digit', hour12: true });
     return date.toLocaleString(); // Uses user's default locale and time format
   }
 
@@ -32,27 +36,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (startBtn) {
     startBtn.style.width = "200px";
-    endBtn?.classList.add("invisible");
+    endBtn?.classList.add("invisible"); // Ensure endBtn is hidden initially
+
+    // Initially show initial state and hide recording state
+    if (initialStateContainer) initialStateContainer.style.display = 'block';
+    if (recordingStateContainer) recordingStateContainer.style.display = 'none';
+
 
     startBtn.addEventListener('click', () => {
       if (!recording) {
         // Initial "Start" click
         recording = true;
-        const currentUTC = getCurrentUTCTime(); // Get UTC for internal data storage
+        const currentUTC = getCurrentUTCTime();
         recordingData = [`Start: ${getStateLabel()} at ${currentUTC}`];
-        startBtn.textContent = 'Toggle';
+
+        // Hide initial state elements, show recording state elements
+        if (initialStateContainer) initialStateContainer.style.display = 'none';
+        if (recordingStateContainer) recordingStateContainer.style.display = 'block';
+
         currentStateLabel.textContent = `State: ${getStateLabel()} since ${formatUTCToLocalSimpleTime(currentUTC)}`;
-        currentStateLabel.style.display = 'block';
-        initialState.style.display = 'none';
-        toggleRow.style.display = 'none'; // Hide the toggle itself
+
+        startBtn.textContent = 'Toggle'; // Change start button text to "Toggle"
         endBtn.classList.remove("invisible");
         endBtn.classList.add("visible");
       } else {
         // Subsequent "Toggle" button clicks (when recording is true)
-        // Programmatically toggle the checkbox state
-        stateToggle.checked = !stateToggle.checked; // <--- FIX IS HERE
+        stateToggle.checked = !stateToggle.checked; // Toggle the checkbox state
 
-        // Then, update the display and record the new state
+        // Update the display and record the new state
         const currentUTC = getCurrentUTCTime();
         const entry = `Toggle: ${getStateLabel()} at ${currentUTC}`;
         recordingData.push(entry);
@@ -72,23 +83,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     endBtn.addEventListener('click', () => {
       recording = false;
-      const currentUTC = getCurrentUTCTime(); // Get UTC for internal data storage
+      const currentUTC = getCurrentUTCTime();
       recordingData.push(`End: ${getStateLabel()} at ${currentUTC}`);
       const fullText = recordingData.join('\n');
       saveRecordingLocally(fullText);
       alert("Recording saved! You can now segment it from the Segment page.");
 
-      // Reset UI
-      startBtn.textContent = 'Start';
-      currentStateLabel.style.display = 'none';
-      initialState.style.display = 'block';
-      toggleRow.style.display = 'flex';
+      // Reset UI: Show initial state, hide recording state
+      if (initialStateContainer) initialStateContainer.style.display = 'block';
+      if (recordingStateContainer) recordingStateContainer.style.display = 'none';
+
+      startBtn.textContent = 'Start'; // Reset start button text
       endBtn.classList.add("invisible");
-      endBtn.classList.remove("visible");
+      endBtn.classList.remove("visible"); // Ensure endBtn is hidden
+
+      // OPTIONAL: Reset toggle state if desired for a fresh start
+      // stateToggle.checked = false;
     });
   }
 
-  // === SEGMENT PAGE LOGIC ===
+  // === SEGMENT PAGE LOGIC (no changes needed here for this issue) ===
   const gpxFile = document.getElementById("gpxFile");
   const uploadGpxBtn = document.getElementById("uploadGpxBtn");
   const gpxFilename = document.getElementById("gpxFilename");
@@ -101,8 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const processBtn = document.getElementById("processBtn");
 
   const resultSection = document.getElementById("resultSection");
-  // These constants are declared here, but their elements are in HTML,
-  // and their event listeners are set within processGpxAndSplit
   const downloadGoodGpxBtn = document.getElementById("downloadGoodGpxBtn");
   const downloadAvoidGpxBtn = document.getElementById("downloadAvoidGpxBtn");
 
@@ -115,21 +127,16 @@ document.addEventListener("DOMContentLoaded", () => {
           const option = document.createElement("option");
           option.value = key; // Keep the original UTC filename as the value for internal use
 
-          // Extract the timestamp part from the filename
           let timestampStr = key.replace("recording-", "").replace(".txt", "");
-
-          // FIX: Replace hyphens in the time portion with colons for Date parsing
           timestampStr = timestampStr.replace(/T(\d{2})-(\d{2})-(\d{2})/, 'T$1:$2:$3');
 
           const date = new Date(timestampStr);
 
-          // Check if the date is valid before formatting
           if (isNaN(date.getTime())) {
             option.textContent = `Recording - Corrupted Name (${key.replace("recording-", "").replace(".txt", "")})`;
             return;
           }
 
-          // Format the date to a local, readable string
           const formattedDate = date.toLocaleString(undefined, {
             year: 'numeric',
             month: 'short',
@@ -138,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
             minute: '2-digit'
           });
 
-          option.textContent = `Recording - ${formattedDate}`; // Display the formatted date
+          option.textContent = `Recording - ${formattedDate}`;
           recordingSelect.appendChild(option);
         }
       });
@@ -157,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!match) return;
 
       const [, type, state, rawTime] = match;
-      const time = rawTime.replace('+00:00Z', 'Z'); // Ensure consistent Z suffix
+      const time = rawTime.replace('+00:00Z', 'Z');
 
       if (type === 'Start' || type === 'Toggle') {
         if (currentState !== null && currentStartTime !== null) {
@@ -195,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     recordingSelect.addEventListener('change', () => {
       const selectedKey = recordingSelect.value;
       const content = localStorage.getItem(selectedKey);
-      txtFilename.textContent = selectedKey.replace("recording-", "").replace(".txt", ""); // Display raw filename in the label
+      txtFilename.textContent = selectedKey.replace("recording-", "").replace(".txt", "");
       const parsedIntervals = parseRecordingText(content);
       console.log("Parsed Intervals:", parsedIntervals);
       processSection.style.display = 'block';
@@ -231,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
           resultSection.style.display = 'block';
-          processGpxAndSplit(gpxText, intervals); // This function now also attaches download handlers
+          processGpxAndSplit(gpxText, intervals);
         } catch (err) {
           console.error("Error in processGpxAndSplit:", err);
           alert("Something went wrong while processing the GPX file.");
@@ -264,12 +271,11 @@ document.addEventListener("DOMContentLoaded", () => {
       testInput.click();
     });
   }
-  populateRecordingList(); // Call on DOMContentLoaded to populate list initially
+  populateRecordingList();
 });
 
 function saveRecordingLocally(content) {
   const now = new Date();
-  // Ensure timestamp is consistent (hyphens for saving)
   const timestamp = now.toISOString().replace(/:/g, '-');
   const filename = `recording-${timestamp}.txt`;
   localStorage.setItem(filename, content);
@@ -285,10 +291,10 @@ function processGpxAndSplit(gpxText, intervals) {
   const avoidSegments = [];
 
   let currentSegmentType = null;
-  let currentSegmentPoints = []; // Stores point data {lat, lon, ele, time}
+  let currentSegmentPoints = [];
 
   let lastTime = null;
-  const maxGap = 5 * 60 * 1000; // 5 minutes in milliseconds
+  const maxGap = 5 * 60 * 1000;
 
   trkpts.forEach(pt => {
     const timeEl = pt.getElementsByTagName("time")[0];
@@ -305,11 +311,10 @@ function processGpxAndSplit(gpxText, intervals) {
     const lon = parseFloat(pt.getAttribute("lon"));
     const eleEl = pt.getElementsByTagName("ele")[0];
     const ele = eleEl ? parseFloat(eleEl.textContent) : undefined;
-    const time = timeEl.textContent; // Original time string for GPX export
+    const time = timeEl.textContent;
 
-    const pointData = { lat, lon, ele, time }; // Collect all necessary point data
+    const pointData = { lat, lon, ele, time };
 
-    // Handle time gaps *before* adding the current point
     if (lastTime !== null && (ptTime - lastTime > maxGap)) {
       if (currentSegmentPoints.length > 0) {
         if (currentSegmentType === "Good") {
@@ -317,44 +322,39 @@ function processGpxAndSplit(gpxText, intervals) {
         } else if (currentSegmentType === "Avoid") {
           avoidSegments.push(currentSegmentPoints);
         }
-        currentSegmentPoints = []; // Reset for a new segment
-        currentSegmentType = null; // Reset segment type as well
+        currentSegmentPoints = [];
+        currentSegmentType = null;
       }
     }
 
     if (interval) {
       const newSegmentType = interval.state;
 
-      // If the state has changed OR we just started a new segment after a gap/no-interval
       if (newSegmentType !== currentSegmentType && currentSegmentPoints.length > 0) {
-        // Finalize the previous segment
         if (currentSegmentType === "Good") {
           goodSegments.push(currentSegmentPoints);
         } else if (currentSegmentType === "Avoid") {
           avoidSegments.push(currentSegmentPoints);
         }
-        currentSegmentPoints = []; // Reset for the new type of segment
+        currentSegmentPoints = [];
       }
 
-      currentSegmentType = newSegmentType; // Update the current segment type
-      currentSegmentPoints.push(pointData); // Add the point to the current active segment
+      currentSegmentType = newSegmentType;
+      currentSegmentPoints.push(pointData);
     } else {
-      // If no interval matches (point is outside defined 'Good' or 'Avoid' periods)
-      // Finalize any ongoing segment
       if (currentSegmentPoints.length > 0) {
         if (currentSegmentType === "Good") {
           goodSegments.push(currentSegmentPoints);
         } else if (currentSegmentType === "Avoid") {
           avoidSegments.push(currentSegmentPoints);
         }
-        currentSegmentPoints = []; // Reset
-        currentSegmentType = null; // Reset
+        currentSegmentPoints = [];
+        currentSegmentType = null;
       }
     }
-    lastTime = ptTime; // Update lastTime for the next iteration
+    lastTime = ptTime;
   });
 
-  // After the loop, push any remaining active segment
   if (currentSegmentPoints.length > 0) {
     if (currentSegmentType === "Good") {
       goodSegments.push(currentSegmentPoints);
@@ -363,13 +363,11 @@ function processGpxAndSplit(gpxText, intervals) {
     }
   }
 
-  // --- Generate GPX content for download ---
   const goodGpxContent = generateGpxContent(goodSegments);
   const avoidGpxContent = generateGpxContent(avoidSegments);
 
-  displaySplitMap(goodSegments, avoidSegments); // Display map (visual)
+  displaySplitMap(goodSegments, avoidSegments);
 
-  // Attach event listeners for download buttons after GPX content is ready
   const downloadGoodGpxBtn = document.getElementById("downloadGoodGpxBtn");
   const downloadAvoidGpxBtn = document.getElementById("downloadAvoidGpxBtn");
 
@@ -381,7 +379,6 @@ function processGpxAndSplit(gpxText, intervals) {
   }
 }
 
-// --- New helper function: generateGpxContent ---
 function generateGpxContent(segments) {
   let gpx = `<?xml version="1.0" encoding="UTF-8"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="SegmentApp">
@@ -412,23 +409,18 @@ function generateGpxContent(segments) {
 function displaySplitMap(goodSegments, avoidSegments) {
   const container = document.getElementById('map-preview');
 
-  // Check if a Leaflet map instance already exists on this container
-  // Leaflet usually stores a reference under the _leaflet_map property (or _leaflet_id for older versions/internal use)
-  if (container._leaflet_map) { // This is the more reliable property to check for an active map instance
-    container._leaflet_map.remove(); // Call the remove method on the existing map instance
-    container._leaflet_map = null;   // Clear the reference
+  if (container._leaflet_map) {
+    container._leaflet_map.remove();
+    container._leaflet_map = null;
   }
-  // Also, ensure the _leaflet_id (internal to Leaflet) is cleared if it exists
   if (container._leaflet_id) {
     delete container._leaflet_id;
   }
 
+  container.innerHTML = '';
 
-  container.innerHTML = ''; // Clear any existing content inside the div
-
-  // Initialize the new map
   const map = L.map('map-preview');
-  container._leaflet_map = map; // Store the map instance directly on the container element
+  container._leaflet_map = map;
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
@@ -437,7 +429,6 @@ function displaySplitMap(goodSegments, avoidSegments) {
   const allPoints = [];
 
   goodSegments.forEach(segment => {
-    // Only extract lat/lon for map display
     const latLngs = segment.map(pt => [pt.lat, pt.lon]);
     if (latLngs.length) {
       const poly = L.polyline(latLngs, {
@@ -450,7 +441,6 @@ function displaySplitMap(goodSegments, avoidSegments) {
   });
 
   avoidSegments.forEach(segment => {
-    // Only extract lat/lon for map display
     const latLngs = segment.map(pt => [pt.lat, pt.lon]);
     if (latLngs.length) {
       const poly = L.polyline(latLngs, {
