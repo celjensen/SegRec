@@ -46,8 +46,8 @@ body {
   /* justify-content: space-between; */
 
   /* Use generous padding to push content away from fixed header/nav */
-  padding-top: 75px; /* Increased to give more space for the header */
-  padding-bottom: 110px; /* Increased to give more space for the nav bar + safe area */
+  padding-top: 85px; /* Increased to give more space for the header */
+  padding-bottom: 130px; /* Increased to give more space for the nav bar + safe area */
 
   overflow-y: auto; /* This remains the primary scroll area */
   -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
