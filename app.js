@@ -419,8 +419,11 @@ function displaySplitMap(goodSegments, avoidSegments) {
 
   container.innerHTML = '';
 
-  const map = L.map('map-preview');
-  container._leaflet_map = map;
+  const map = L.map('map-preview', {
+  fullscreenControl: true
+});
+container._leaflet_map = map;
+
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'

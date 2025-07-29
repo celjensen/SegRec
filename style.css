@@ -85,7 +85,7 @@ body {
 }
 
 .nav-spacer {
-  height: 130px; /* Equal to or a bit more than your .nav height */
+  height: 100px; /* Equal to or a bit more than your .nav height */
   flex-shrink: 0;
 }
 
