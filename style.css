@@ -80,7 +80,7 @@ body {
 /* ------------------------------------------------------------------- */
 
 .header-spacer {
-  height: 80px; /* Match your .screen padding-top */
+  height: 65px; /* Match your .screen padding-top */
   flex-shrink: 0;
 }
 

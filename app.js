@@ -125,6 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const resultSection = document.getElementById("resultSection");
 
+
   function populateRecordingList() {
     if (recordingSelect) {
       recordingSelect.innerHTML = '';
@@ -201,6 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector('.upload-txt-wrapper').style.display = 'flex';
         populateRecordingList();
       }
+
     });
   }
 
@@ -278,7 +280,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   populateRecordingList();
+
+  window.addEventListener("load", () => {
+    fixMobileHeaderSpacing();
+    setTimeout(fixMobileHeaderSpacing, 50);
+  });
 });
+
+function fixMobileHeaderSpacing() {
+  const spacer = document.querySelector(".header-spacer");
+  if (spacer) {
+    spacer.style.display = "none";
+    void spacer.offsetHeight;
+    spacer.style.display = "block";
+  }
+}
 
 function saveRecordingLocally(content) {
   const now = new Date();
