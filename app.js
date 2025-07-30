@@ -279,22 +279,30 @@ document.addEventListener("DOMContentLoaded", () => {
       testInput.click();
     });
   }
-  populateRecordingList();
 
-  window.addEventListener("load", () => {
-    fixMobileHeaderSpacing();
-    setTimeout(fixMobileHeaderSpacing, 50);
-  });
-});
+  function applyHeaderOffset() {
+  const header = document.querySelector('.header');
+  const screens = document.querySelectorAll('.screen');
 
-function fixMobileHeaderSpacing() {
-  const spacer = document.querySelector(".header-spacer");
-  if (spacer) {
-    spacer.style.display = "none";
-    void spacer.offsetHeight;
-    spacer.style.display = "block";
+  if (header && screens.length) {
+    const headerHeight = header.offsetHeight;
+
+    screens.forEach(screen => {
+      screen.style.paddingTop = `${headerHeight}px`;
+    });
   }
 }
+
+// Run once on DOM ready
+applyHeaderOffset();
+
+// Run again on full window load just in case
+window.addEventListener('load', applyHeaderOffset);
+
+
+  populateRecordingList();
+
+});
 
 function saveRecordingLocally(content) {
   const now = new Date();
