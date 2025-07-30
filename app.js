@@ -280,6 +280,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
+
   populateRecordingList();
 
 });

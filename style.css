@@ -6,7 +6,7 @@
 }
 
 html, body {
-  height: 100%;
+  height: 100dvh;
   margin: 0;
   overflow: hidden; /* KEEP THIS! Crucial for preventing body scroll */
 }
@@ -79,8 +79,9 @@ body {
 }
 /* ------------------------------------------------------------------- */
 
+
 .header-spacer {
-  height: 75px; /* Match your .screen padding-top */
+  height: 65px;
   flex-shrink: 0;
 }
 
@@ -153,10 +154,6 @@ body {
   gap: 12px;
 }
 
-.state-label-wrapper {
-  height: 50px; /* Enough space for both labels */
-  position: relative;
-}
 
 .label {
   position: absolute;
