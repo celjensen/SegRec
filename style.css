@@ -6,8 +6,7 @@
 }
 
 html, body {
-  height: 100dvh; /* Use dynamic viewport height for modern browsers (best for mobile) */
-  height: 100vh;
+  height: 100%;
   margin: 0;
   overflow: hidden; /* KEEP THIS! Crucial for preventing body scroll */
 }
@@ -81,7 +80,7 @@ body {
 /* ------------------------------------------------------------------- */
 
 .header-spacer {
-  height: 65px; /* Match your .screen padding-top */
+  height: 80px; /* Match your .screen padding-top */
   flex-shrink: 0;
 }
 
