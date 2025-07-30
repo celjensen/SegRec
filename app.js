@@ -280,26 +280,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function applyHeaderOffset() {
-  const header = document.querySelector('.header');
-  const screens = document.querySelectorAll('.screen');
-
-  if (header && screens.length) {
-    const headerHeight = header.offsetHeight;
-
-    screens.forEach(screen => {
-      screen.style.paddingTop = `${headerHeight}px`;
-    });
-  }
-}
-
-// Run once on DOM ready
-applyHeaderOffset();
-
-// Run again on full window load just in case
-window.addEventListener('load', applyHeaderOffset);
-
-
   populateRecordingList();
 
 });
