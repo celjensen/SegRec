@@ -15,20 +15,28 @@
     <div class="screen" id="recordScreen">
       <div class="header-spacer"></div>
       <div class="content">
-        <div id="initialState" class="label">Initial State</div>
 
-        <div class="toggle-group" id="toggleRow">
-          <span>Good</span>
-          <label class="switch">
-            <input type="checkbox" id="stateToggle" />
-            <span class="slider"></span>
-          </label>
-          <span>Avoid</span>
+        <div id="recordInitialState" class="record-state-section">
+          <div class="state-label-wrapper">
+            <div id="initialState" class="label">Initial State</div>
+          </div>
+          <div class="toggle-group" id="toggleRow">
+            <span>Good</span>
+            <label class="switch">
+              <input type="checkbox" id="stateToggle" />
+              <span class="slider"></span>
+            </label>
+            <span>Avoid</span>
+          </div>
         </div>
 
-        <div id="currentState" class="label" style="display: none;">State: Good since --</div>
-      </div>
+        <div id="recordCurrentState" class="record-state-section" style="display: none;">
+          <div class="state-label-wrapper">
+            <div id="currentState" class="label">State: Good since --</div>
+          </div>
+        </div>
 
+      </div>
 
       <div class="button-wrapper">
         <div class="button-container">

@@ -91,17 +91,49 @@ body {
 
 
 .content { /* This is likely for the Record page's content */
-  /* REMOVED flex: 1; from .content to prevent it from consuming all space */
-  /* flex: 1; */
+  /* This 'content' div now needs to contain the flexible height of the changing sections */
   padding: 20px;
   text-align: center;
-  /* No specific padding-top/bottom needed here as .screen handles overall spacing */
+  /* Add flex properties to allow dynamic content sections to stack */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  /* Remove any fixed heights from .content if present, it should grow/shrink with its children */
+}
+
+/* New style for the section wrappers (initial and current) */
+.record-state-section {
+  display: flex; /* Make it a flex container */
+  flex-direction: column; /* Stack children (label & toggle) vertically */
+  align-items: center; /* Center content horizontally */
+  /* Define a fixed height for this section to prevent layout shifts */
+  /* This height must accommodate the tallest possible content, which is the initial state with its toggle */
+  height: 60px; /* Adjust this value based on actual content measurement (e.g., 50px label + 40px toggle + margins) */
+  justify-content: flex-start; /* Align content to the top within its fixed height */
+  width: 100%; /* Ensure it spans the width of its parent */
+}
+
+
+.state-label-wrapper {
+  /* This div now only wraps the single label, it still needs relative positioning */
+  position: relative;
+  width: 100%; /* Allow it to take full width */
+  /* This height should accommodate the tallest possible single line, or two lines if the text wraps */
+  height: 50px; /* Adjust this to comfortably fit your longest label (e.g., "State: Good since...") */
+  display: flex; /* Use flex to center the absolute child if needed for visual alignment */
+  justify-content: center;
+  align-items: center;
 }
 
 .label {
+  position: absolute; /* Keep absolute for layering within state-label-wrapper */
+  width: 100%;
+  left: 0;
+  top: 0; /* Pin to the top of state-label-wrapper */
+  text-align: center;
   font-weight: bold;
   font-size: 18px;
-  margin-bottom: 10px;
+  line-height: 1.2; /* Ensure consistent line spacing for wrapped text */
 }
 
 .toggle-group {
@@ -109,13 +141,31 @@ body {
   justify-content: center;
   align-items: center;
   gap: 10px;
+  margin-top: 10px; /* Add some space above the toggle group if desired */
+  margin-bottom: 10px; /* This margin will now correctly push the button-wrapper down */
 }
+
+
 
 .toggle-labels {
   display: flex;
   align-items: center;
   gap: 12px;
 }
+
+.state-label-wrapper {
+  height: 50px; /* Enough space for both labels */
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  text-align: center;
+}
+
 
 /* Toggle */
 .switch {

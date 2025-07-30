@@ -8,12 +8,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // === RECORD PAGE LOGIC ===
   const startBtn = document.getElementById("startBtn");
   const stateToggle = document.getElementById("stateToggle");
-  const currentStateLabel = document.getElementById("currentState"); // Still need this to update text
   const endBtn = document.getElementById("endBtn");
 
-  // NEW: References to the containers
-  const initialStateContainer = document.getElementById("initialStateContainer");
-  const recordingStateContainer = document.getElementById("recordingStateContainer");
+  // Get references to the new section wrappers
+  const recordInitialState = document.getElementById("recordInitialState");
+  const recordCurrentState = document.getElementById("recordCurrentState");
+
+  // We no longer need direct JS control over these specific elements' display/visibility,
+  // as their parent wrapper will handle it.
+  // const initialStateLabel = document.getElementById("initialState");
+  // const toggleRow = document.getElementById("toggleRow");
+  const currentStateLabel = document.getElementById("currentState"); // Still need this to update its text
 
   let recording = false;
   let recordingData = [];
@@ -22,12 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return new Date().toISOString();
   }
 
-  // Helper function to format UTC date to local simple time string
   function formatUTCToLocalSimpleTime(utcString) {
     const date = new Date(utcString);
-    // Use options for a more readable time format if needed, e.g., for 12-hour:
-    // return date.toLocaleString(undefined, { hour: 'numeric', minute: '2-digit', hour12: true });
-    return date.toLocaleString(); // Uses user's default locale and time format
+    return date.toLocaleString();
   }
 
   function getStateLabel() {
@@ -36,11 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (startBtn) {
     startBtn.style.width = "200px";
-    endBtn?.classList.add("invisible"); // Ensure endBtn is hidden initially
+    endBtn?.classList.add("invisible");
 
-    // Initially show initial state and hide recording state
-    if (initialStateContainer) initialStateContainer.style.display = 'block';
-    if (recordingStateContainer) recordingStateContainer.style.display = 'none';
+    // --- INITIAL RECORD PAGE LOAD STATE ---
+    // The HTML already sets recordCurrentState to display:none,
+    // and recordInitialState is block by default.
+    // Explicitly set here for robustness if page is navigated to.
+    if (recordInitialState) recordInitialState.style.display = 'flex'; // It's a flex container
+    if (recordCurrentState) recordCurrentState.style.display = 'none';
+    // --- END INITIAL FIX ---
 
 
     startBtn.addEventListener('click', () => {
@@ -50,10 +56,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentUTC = getCurrentUTCTime();
         recordingData = [`Start: ${getStateLabel()} at ${currentUTC}`];
 
-        // Hide initial state elements, show recording state elements
-        if (initialStateContainer) initialStateContainer.style.display = 'none';
-        if (recordingStateContainer) recordingStateContainer.style.display = 'block';
+        // --- HIDE INITIAL STATE AND SHOW CURRENT STATE AFTER "START" ---
+        if (recordInitialState) recordInitialState.style.display = 'none';
+        if (recordCurrentState) recordCurrentState.style.display = 'flex'; // Show current state section
+        // --- END HIDE/SHOW FIX ---
 
+        // Update the current state label text
         currentStateLabel.textContent = `State: ${getStateLabel()} since ${formatUTCToLocalSimpleTime(currentUTC)}`;
 
         startBtn.textContent = 'Toggle'; // Change start button text to "Toggle"
@@ -72,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     stateToggle.addEventListener('change', () => {
-      // This listener handles direct changes to the checkbox OR changes initiated by startBtn's click handler
       if (recording) {
         const currentUTC = getCurrentUTCTime();
         const entry = `Toggle: ${getStateLabel()} at ${currentUTC}`;
@@ -89,20 +96,22 @@ document.addEventListener("DOMContentLoaded", () => {
       saveRecordingLocally(fullText);
       alert("Recording saved! You can now segment it from the Segment page.");
 
-      // Reset UI: Show initial state, hide recording state
-      if (initialStateContainer) initialStateContainer.style.display = 'block';
-      if (recordingStateContainer) recordingStateContainer.style.display = 'none';
+      // --- RESET UI AFTER "END" ---
+      // Show initial state section, hide recording state section
+      if (recordInitialState) recordInitialState.style.display = 'flex';
+      if (recordCurrentState) recordCurrentState.style.display = 'none';
+      // --- END RESET FIX ---
 
       startBtn.textContent = 'Start'; // Reset start button text
       endBtn.classList.add("invisible");
       endBtn.classList.remove("visible"); // Ensure endBtn is hidden
 
-      // OPTIONAL: Reset toggle state if desired for a fresh start
-      // stateToggle.checked = false;
+      // Reset toggle state for a fresh start
+      stateToggle.checked = false;
     });
   }
 
-  // === SEGMENT PAGE LOGIC (no changes needed here for this issue) ===
+  // === SEGMENT PAGE LOGIC (remainder of your app.js) ===
   const gpxFile = document.getElementById("gpxFile");
   const uploadGpxBtn = document.getElementById("uploadGpxBtn");
   const gpxFilename = document.getElementById("gpxFilename");
@@ -115,9 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const processBtn = document.getElementById("processBtn");
 
   const resultSection = document.getElementById("resultSection");
-  const downloadGoodGpxBtn = document.getElementById("downloadGoodGpxBtn");
-  const downloadAvoidGpxBtn = document.getElementById("downloadAvoidGpxBtn");
-
 
   function populateRecordingList() {
     if (recordingSelect) {
@@ -125,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
       Object.keys(localStorage).forEach(key => {
         if (key.endsWith('.txt') && key.startsWith('recording-')) {
           const option = document.createElement("option");
-          option.value = key; // Keep the original UTC filename as the value for internal use
+          option.value = key;
 
           let timestampStr = key.replace("recording-", "").replace(".txt", "");
           timestampStr = timestampStr.replace(/T(\d{2})-(\d{2})-(\d{2})/, 'T$1:$2:$3');
@@ -386,18 +392,18 @@ function generateGpxContent(segments) {
     <name>Segmented Track</name>\n`;
 
   segments.forEach((segment) => {
-    if (segment.length > 0) {
-      gpx += `    <trkseg>\n`;
-      segment.forEach(pt => {
-        gpx += `      <trkpt lat="${pt.lat}" lon="${pt.lon}">\n`;
-        if (pt.ele !== undefined) {
-          gpx += `        <ele>${pt.ele}</ele>\n`;
-        }
-        gpx += `        <time>${pt.time}</time>\n`;
-        gpx += `      </trkpt>\n`;
-      });
-      gpx += `    </trkseg>\n`;
-    }
+      if (segment.length > 0) {
+          gpx += `    <trkseg>\n`;
+          segment.forEach(pt => {
+              gpx += `      <trkpt lat="${pt.lat}" lon="${pt.lon}">\n`;
+              if (pt.ele !== undefined) {
+                  gpx += `        <ele>${pt.ele}</ele>\n`;
+              }
+              gpx += `        <time>${pt.time}</time>\n`;
+              gpx += `      </trkpt>\n`;
+          });
+          gpx += `    </trkseg>\n`;
+      }
   });
 
   gpx += `  </trk>
