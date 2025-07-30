@@ -435,4 +435,7 @@ input:checked + .slider:before {
   white-space: nowrap;
   width: auto;
   min-width: 90px;
+  display: flex;
+  justify-content: center; /* Horizontally center text within the button */
+  align-items: center;
 }
