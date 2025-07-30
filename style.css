@@ -382,6 +382,7 @@ input:checked + .slider:before {
 
 .segment-content .process-button {
   margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 .segment-content .upload-txt-button {
@@ -393,6 +394,7 @@ input:checked + .slider:before {
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   margin-top: -5px;
+  margin-bottom: -10px;
 }
 
 .upload-txt-wrapper {
@@ -414,14 +416,12 @@ input:checked + .slider:before {
   height: 200px;
   background-color: #ddd;
   border-radius: 12px;
-  margin-top: 10px;
 }
 
 .download-buttons {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 10px;
   align-items: center;
 }
 
