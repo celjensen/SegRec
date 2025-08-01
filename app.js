@@ -275,48 +275,72 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Parse selected recording and show process button
+  /**
+   * Event listener for the recording select dropdown.
+   * When a recording is selected, parse its content and display the Process button.
+   */
   if (recordingSelect) {
     recordingSelect.addEventListener('change', () => {
+      // Get the selected recording's key (filename)
       const selectedKey = recordingSelect.value;
+      // Retrieve the content from localStorage
       const content = localStorage.getItem(selectedKey);
+      // Display a shortened version of the selected recording's filename
       txtFilename.textContent = selectedKey.replace("recording-", "").replace(".txt", "");
+      // Parse the recording text into intervals
       const parsedIntervals = parseRecordingText(content);
+      // Log parsed intervals for debugging
       console.log("Parsed Intervals:", parsedIntervals);
+      // Show the section containing the Process button
       processSection.style.display = 'block';
     });
   }
 
-  // Handle processing when Process button is clicked
+  /**
+   * Event listener for the 'Process' button.
+   * Handles reading the GPX file, parsing the recording intervals, and initiating the split process.
+   */
   if (processBtn) {
     processBtn.addEventListener('click', () => {
       console.log("Process button clicked");
 
+      // Get the selected recording
       const selectedKey = recordingSelect.value;
+      // Get its content
       const txtContent = localStorage.getItem(selectedKey);
 
+      // Validate that a recording is selected
       if (!selectedKey || !txtContent) {
         alert("Please select a valid recording.");
         return;
       }
 
+      // Parse the recording intervals
       const intervals = parseRecordingText(txtContent);
+      // Log for debugging
       console.log("Parsed intervals:", intervals);
 
+      // Get the uploaded GPX file
       const file = gpxFile.files[0];
 
+      // Validate that a GPX file is uploaded
       if (!file) {
         alert("Please upload a GPX file first.");
         return;
       }
 
+      // Create a FileReader to read the GPX file
       const reader = new FileReader();
+      // Callback for when the file is successfully read
       reader.onload = () => {
+        // Get the content of the GPX file
         const gpxText = reader.result;
         console.log("GPX file read successfully");
 
         try {
+          // Show the results section
           resultSection.style.display = 'block';
+          // Call the core function to process the GPX and split it based on intervals
           processGpxAndSplit(gpxText, intervals);
         } catch (err) {
           console.error("Error in processGpxAndSplit:", err);
