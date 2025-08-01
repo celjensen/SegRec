@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Metadata and responsive viewport settings -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <!-- Page title -->
   <title>Help</title>
+
+  <!-- External stylesheets and fonts -->
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
 </head>
 <body>
+  <!-- Fixed header at the top -->
   <div class="header">Help</div>
 
+  <!-- Fixed header at the top -->
   <div class="container">
     <div class="screen">
+      <!-- Spacer to ensure content doesn't hide behind fixed header -->
       <div class="header-spacer"></div>
+
+      <!-- Help instructions and info -->
       <div class="help-content">
         <p>
           With this app, you can easily record which sections of your bike ride you enjoyed (those you'd recommend to a friend) and which sections you’d prefer to avoid next time.
         </p>
 
+        <!-- Instructions for recording -->
         <p><strong>How to record your ride:</strong></p>
         <ol>
           <li>Go to the Record page.</li>
@@ -28,6 +39,7 @@
           <li>When your ride is finished, tap End. Your recording will be automatically saved.</li>
         </ol>
 
+        <!-- Instructions for segmenting a GPX file -->
         <p><strong>How to segment your GPX file:</strong></p>
         <ol>
           <li>Download your GPX file from Garmin, Strava, or another app.</li>
@@ -36,17 +48,23 @@
           <li>Press Process.</li>
         </ol>
 
+        <!-- Notes about map and output behavior -->
         <p>
-          After processing, you’ll be able to download separate GPX files for your "Good" and "Avoid" segments. You can then use these files with third-party tools like GPX Studio.
+          After processing, you’ll be able to download separate GPX files for your "Good" and "Avoid" segments. You can then use these files with third-party tools like GPX Studio. Please note that if there is no overlap of time segments in the .txt and .gpx files, no map will display and there will be nothing to download.
         </p>
 
+        <!-- Closing and disclaimer -->
+        <br>
         <p>Happy riding and happy segmenting!</p>
         <p class="disclaimer">Use at your own risk.</p>
       </div>
+
+      <!-- Spacer to account for fixed bottom nav -->
       <div class="nav-spacer"></div>
     </div>
   </div>
 
+  <!-- Bottom fixed navigation bar -->
   <div class="nav">
     <a href="index.html" class="nav-item">
       <img src="icons/home.svg" alt="Home">

@@ -1,39 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Character encoding and mobile responsiveness -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <!-- Page title shown in browser tab -->
   <title>Home</title>
+  <!-- Link to external CSS file -->
   <link rel="stylesheet" href="style.css" />
+  <!-- Preconnect for faster font loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Google Fonts: Inter font family -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
 </head>
 <body>
+  <!-- Fixed top header bar -->
   <div class="header">Home</div>
 
+  <!-- Main app container, constrained to a max width -->
   <div class="container">
     <div class="screen">
+      <!-- Spacer to prevent content from hiding behind the fixed header -->
       <div class="header-spacer"></div>
+
+      <!-- Main content area -->
       <div class="content">
         <p><strong>Welcome to SegRec!</strong><br>Start segmenting your ride today.</p>
       </div>
+      <!-- Spacer to prevent content from being hidden behind fixed bottom nav -->
       <div class="nav-spacer"></div>
     </div>
   </div>
 
+  <!-- Fixed bottom navigation bar -->
   <div class="nav">
+    <!-- Nav link: Home screen -->
     <a href="index.html" class="nav-item">
       <img src="icons/home.svg" alt="Home">
       <span>Home</span>
     </a>
+
+    <!-- Nav link: Record screen -->
     <a href="record.html" class="nav-item">
       <img src="icons/record.svg" alt="Record">
       <span>Record</span>
     </a>
+
+    <!-- Nav link: Segment screen -->
     <a href="segment.html" class="nav-item">
       <img src="icons/segment.svg" alt="Segment">
       <span>Segment</span>
     </a>
+
+    <!-- Nav link: Help screen -->
     <a href="help.html" class="nav-item">
       <img src="icons/help.svg" alt="Help">
       <span>Help</span>

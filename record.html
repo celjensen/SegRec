@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Set character encoding and responsive layout -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <!-- Page title -->
   <title>Record</title>
+  <!-- Link to external stylesheet -->
   <link rel="stylesheet" href="style.css" />
+  <!-- Preconnect to Google Fonts for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Google Fonts: Inter -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
 </head>
 <body>
+  <!-- Fixed top header -->
   <div class="header">Record</div>
 
+  <!-- Main container to constrain app layout -->
   <div class="container">
     <div class="screen" id="recordScreen">
+      <!-- Spacer to offset fixed header -->
       <div class="header-spacer"></div>
+      <!-- Main content area -->
       <div class="content">
 
+        <!-- Initial state toggle section -->
         <div id="recordInitialState" class="record-state-section">
           <div class="state-label-wrapper">
             <div id="initialState" class="label">Initial State</div>
           </div>
+
+          <!-- Toggle switch between "Good" and "Avoid" -->
           <div class="toggle-group" id="toggleRow">
             <span>Good</span>
             <label class="switch">
@@ -30,6 +42,7 @@
           </div>
         </div>
 
+        <!-- Current state display (hidden until recording starts) -->
         <div id="recordCurrentState" class="record-state-section" style="display: none;">
           <div class="state-label-wrapper">
             <div id="currentState" class="label">State: Good since --</div>
@@ -38,19 +51,24 @@
 
       </div>
 
+      <!-- Start recording button section -->
       <div class="button-wrapper">
         <div class="button-container">
           <button id="startBtn">Start</button>
         </div>
       </div>
 
+      <!-- End recording button (hidden initially) -->
       <div class="end-button-wrapper">
         <button id="endBtn" class="invisible">End</button>
       </div>
+
+      <!-- Spacer to avoid overlap with fixed nav bar -->
       <div class="nav-spacer"></div>
     </div>
   </div>
 
+  <!-- Fixed bottom navigation bar -->
   <div class="nav">
     <a href="index.html" class="nav-item">
       <img src="icons/home.svg" alt="Home">
@@ -70,6 +88,7 @@
     </a>
   </div>
 
+  <!-- JavaScript file for interactivity -->
   <script src="app.js"></script>
 </body>
 </html>

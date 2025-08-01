@@ -1,53 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Metadata and mobile responsiveness -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <!-- Page title and favicon (data URI used to avoid request) -->
   <title>Segment</title>
   <link rel="icon" href="data:,">
+
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="leaflet.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
 
+  <!-- Leaflet map library -->
   <script src="leaflet.js"></script>
 
+  <!-- Fullscreen plugin for Leaflet -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/4.0.0/Control.FullScreen.min.css"
   />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/4.0.0/Control.FullScreen.min.js"></script>
-
 </head>
+
 <body>
+  <!-- Fixed top header -->
   <div class="header">Segment</div>
 
+  <!-- Main layout container -->
   <div class="container">
     <div class="screen">
+      <!-- Spacer to account for fixed header -->
       <div class="header-spacer"></div>
+      <!-- Main content for segmenting -->
       <div class="segment-content">
+
+        <!-- Upload GPX section -->
         <div class="upload-section">
           <button id="uploadGpxBtn" class="process-button">Upload GPX</button>
           <input type="file" id="gpxFile" accept=".gpx" style="display: none;">
           <div id="gpxFilename" class="file-label" style="margin-bottom: 20px;"></div>
         </div>
 
+        <!-- Recording selection and upload section -->
         <div id="recordingSection" style="display: none;">
           <h3>Select saved recording or upload a .txt file</h3>
           <select id="recordingSelect" size="4"></select>
           <div id="txtFilename" class="file-label"></div>
         </div>
 
+        <!-- Upload a TXT toggle log manually -->
         <div class="upload-txt-wrapper" style="display: none; margin-top: 10px;">
           <button id="uploadTxtTest" class="upload-txt-button">
             Upload .txt
           </button>
         </div>
 
+        <!-- Process button (appears after files are ready) -->
         <div id="processSection" style="display: none;">
           <button id="processBtn" class="process-button">Process</button>
         </div>
 
+        <!-- Output: Map preview and download buttons -->
         <div id="resultSection" style="display: none;">
           <div class="segment-map-preview" id="map-preview" style="border-radius: 12px; margin-top: 20px;"></div>
           <div class="download-buttons">
@@ -56,10 +73,13 @@
           </div>
         </div>
       </div>
+
+      <!-- Spacer to avoid nav overlap -->
       <div class="nav-spacer"></div>
     </div>
   </div>
 
+  <!-- Bottom fixed navigation -->
   <div class="nav">
     <a href="index.html" class="nav-item">
       <img src="icons/home.svg" alt="Home">
@@ -79,6 +99,7 @@
     </a>
   </div>
 
+  <!-- JS logic for button behavior, uploading, processing, etc. -->
   <script src="app.js"></script>
 </body>
 </html>
