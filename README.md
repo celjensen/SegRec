@@ -6,3 +6,21 @@ GPX overlap validation: Show a warning if no GPX trackpoints match any recorded 
 Add segment notes: Allow users to attach notes to segments, with optional voice/microphone input.  
 Desktop version: Build a desktop-friendly layout with optimized interactions for larger screens.  
 Strava integration: Enable importing or syncing GPX data with Strava for easier sharing and tracking.  
+
+## Screenshots
+
+### Home Screen
+![Home](screenshots/home_screenshot.png)
+
+### Record Screen (Start)
+![Record screen](screenshots/record_screenshot.png)
+
+### Record Screen (In Progress)
+![Record screen - toggled](screenshots/record2_screenshot.png)
+
+### Segment Screen
+![Segment screen](screenshots/segment_screenshot.png)
+
+### Help Screen
+![Help screen](screenshots/help_screenshot.png)
+
