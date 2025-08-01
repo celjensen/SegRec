@@ -1,6 +1,7 @@
+## Description
 A simple mobile web app for cyclists to label ride quality in real time, then view and generate separate good/avoid GPX segments afterwards.
 
-Future updates:
+## Future Updates
 
 GPX overlap validation: Show a warning if no GPX trackpoints match any recorded segment intervals.  
 Add segment notes: Allow users to attach notes to segments, with optional voice/microphone input.  
