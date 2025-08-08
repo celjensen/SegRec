@@ -1,5 +1,5 @@
 # SegRec
-An offline-capable mpbile web app for cyclists to label ride quality (good or avoid) in real time and generate segmented GPX files after the ride.
+An offline-capable mobile web app for cyclists to label ride quality (good or avoid) in real time and generate segmented GPX files after the ride.
 
 ## What SegRec Does 
 SegRec lets cyclists: 
