@@ -16,20 +16,20 @@ Want to try it out?
 
 ## Screenshots
 
-### Home Screen
+### Home Screen  
 <img src="screenshots/home_screenshot.png" alt="Home" width="300">
 
-### Record Screen (Start)
-![Record screen](screenshots/record_screenshot.png)
+### Record Screen (Start)  
+<img src="screenshots/record_screenshot.png" alt="Record Start" width="300">
 
-### Record Screen (In Progress)
-![Record screen - toggled](screenshots/record2_screenshot.png)
+### Record Screen (In Progress)  
+<img src="screenshots/record2_screenshot.png" alt="Record In Progress" width="300">
 
-### Segment Screen
-![Segment screen](screenshots/segment_screenshot.png)
+### Segment Screen  
+<img src="screenshots/segment_screenshot.png" alt="Segment" width="300">
 
-### Help Screen
-![Help screen](screenshots/help_screenshot.png)
+### Help Screen  
+<img src="screenshots/help_screenshot.png" alt="Help" width="300">
 
 ## How To Use SegRec
 Record Your Ride 
