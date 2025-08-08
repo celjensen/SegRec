@@ -12,12 +12,12 @@ It works entirely in the browser.
 
 ## Demo
 Want to try it out?
-[Launch the SegRec App](celjensen.github.io/SegRec/)
+[Launch the SegRec App](https://celjensen.github.io/SegRec/)
 
 ## Screenshots
 
 ### Home Screen
-![Home](screenshots/home_screenshot.png)
+<img src="screenshots/home_screenshot.png" alt="Home" width="300">
 
 ### Record Screen (Start)
 ![Record screen](screenshots/record_screenshot.png)
